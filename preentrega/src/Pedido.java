@@ -1,14 +1,19 @@
-package org.preEntregaTT;
 
-public class Producto {
-     private static int SIGUIENTE_ID = 1;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Pedido {
+
+    private List<Producto> productos;
+    private static int SIGUIENTE_ID = 1;
     private final int id;
     private String nombre;
     private double precio;
     private int stock;
     private int cantidadAComprar;
 
-    public Producto(String nombre, double precio, int stock) {
+    public Pedido() {
+        this.productos = new ArrayList<>();
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
@@ -17,8 +22,10 @@ public class Producto {
         SIGUIENTE_ID++;
     }
 
-    // OTROS METODOS
-    public void mostrarInfo(){
+    public void agregarProductoAPedido(Producto producto){
+        this.productos.add(producto);
+    }
+    public void mostrarInfo() {
         System.out.println("#########################");
         System.out.printf("""
                 Id: %s
@@ -27,23 +34,8 @@ public class Producto {
                 Stock: %s
                 """, this.id, this.nombre, this.precio, this.stock);
         System.out.println("#########################");
-
-//        System.out.println("Id: " + this.id);
-//        System.out.println("Nombre: " + this.nombre);
-//        System.out.println("Precio: " + this.precio);
-//        System.out.println("Stock: " + this.stock);
     }
 
-    public boolean contieneNombre(String busqueda){
-        String nombreMinuscula = this.nombre.toLowerCase();
-        // TODO: agregar una forma de reemplazar todas las vocales con acento por las vocales sin acento
-        // a checkear: https://docs.oracle.com/javase/8/docs/api/java/text/Normalizer.html
-        // a checkear: nombreMinuscula.replaceAll("á", "a");
-        return nombreMinuscula.contains(busqueda.toLowerCase());
-    }
-
-
-    // GETTERS y SETTERS
     public int getId() {
         return id;
     }

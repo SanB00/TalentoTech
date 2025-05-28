@@ -1,4 +1,4 @@
-package org.preEntregaTT;
+
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 
 public class Main {
-    ArrayList<Pedido> listaPedidos = new ArrayList<>();
+
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
-        ArrayList<Pedido> pedidos = new ArrayList<>();
         ArrayList<Producto> productos = new ArrayList<>();
+        ArrayList<Pedido> listaPedidos = new ArrayList<>();
         int opcion = 0;
 
         while (opcion != 7) {
@@ -23,8 +23,8 @@ public class Main {
                 case 2 -> listarProductos(productos);
                 case 3 -> buscarProducto(productos);
                 case 4 -> eliminarProducto(productos);
-                case 5 -> agregarPedido(pedidos);
-                case 6 -> listarPedidos(pedidos);
+                case 5 -> agregarPedido(listaPedidos);
+                case 6 -> listarPedidos(listaPedidos);
                 case 7 -> System.out.println("Gracias por usar la app!");
                 default -> System.out.println("Opcion incorrecta");
             }
@@ -136,13 +136,12 @@ public class Main {
 
 
     }
-    private static void listarPedidos(ArrayList<Pedido> pedidos) {
-        if (pedidos.isEmpty()) {
-
+    private static void listarPedidos(ArrayList<Pedido> listaPedidos) {
+        if (listaPedidos.isEmpty()) {
             System.out.println("No hay pedidos registrados.");
         } else {
             System.out.println("\n=== Lista de Pedidos ===");
-            for (Pedido pedido : pedidos) {
+            for (Pedido pedido : listaPedidos) {
                 pedido.mostrarInfo();
                 System.out.println("------------------------");
             }
