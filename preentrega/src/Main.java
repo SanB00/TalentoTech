@@ -45,7 +45,7 @@ public class Main {
                 
                 1) Agregar producto
                 2) Listar productos
-                3) Buscar/Actualizar producto
+                3) Buscar producto
                 4) Eliminar producto
                 5) Crear un pedido
                 6) Listar pedidos
@@ -86,6 +86,7 @@ public class Main {
         String busqueda = entrada.nextLine();
         ArrayList<Producto> productosEncontrados = new ArrayList<>();
 
+
         for (Producto producto : listaProductos) {
             if (producto.contieneNombre(busqueda)) {
                 productosEncontrados.add(producto);
@@ -97,6 +98,32 @@ public class Main {
         } else {
             for (Producto producto : productosEncontrados) {
                 producto.mostrarInfo();
+            }
+            System.out.println("\n¿Desea actualizar el stock de algún producto? (s/n)");
+            String respuesta = entrada.nextLine().toLowerCase();
+
+            if (respuesta.equals("si")) {
+                System.out.println("Ingrese el ID del producto a actualizar:");
+                try {
+                    int idProducto = Integer.parseInt(entrada.nextLine().trim());
+                    Producto productoAActualizar = buscarProductoId(listaProductos, idProducto);
+
+                    if (productoAActualizar != null) {
+                        System.out.println("Ingrese la nueva cantidad de stock:");
+                        int nuevoStock = Integer.parseInt(entrada.nextLine().trim());
+                        if (nuevoStock >= 0) {
+                            productoAActualizar.setStock(nuevoStock);
+                            System.out.println("Stock actualizado exitosamente!");
+                            productoAActualizar.mostrarInfo();
+                        } else {
+                            System.out.println("Error: El stock no puede ser negativo.");
+                        }
+                    } else {
+                        System.out.println("No se encontró un producto con ese ID.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Por favor ingrese un número válido.");
+                }
             }
         }
     } //3
@@ -160,7 +187,25 @@ public class Main {
 
 
             // 4) Agregar el objeto de pedido al listado
-            objPedido.agregarProductoAPedido(objProducto);
+            
+            if (objProducto == null) {
+                System.out.println("Producto inexistente. Por favor ingrese un ID válido.");
+                continue;
+            }
+
+            try {
+                System.out.println("Ingrese cantidad que desea: ");
+                String strCantidad = entrada.nextLine();
+                int cantidad = Integer.parseInt(strCantidad);
+
+                objPedido.agregarProductoAPedido(objProducto, cantidad);
+                System.out.println("Producto agregado al pedido exitosamente!");
+
+            } catch (StockInsuficienteException e) {
+                System.out.println("Error: " + e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Por favor ingrese un número válido.");
+            }
         }
 
         // 5) Devolver el pedido
@@ -179,8 +224,3 @@ public class Main {
         }
     }
 }
-
-
-
-
-

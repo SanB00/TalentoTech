@@ -21,21 +21,21 @@ public class Producto {
 
     // OTROS METODOS
     public void mostrarInfo() {
-        System.out.println("#########################");
+        System.out.println("-------------------------");
         System.out.printf("""
                 Id: %s
                 Nombre: %s
                 Precio: %s
                 Stock: %s
                 """, this.id, this.nombre, this.precio, this.stock);
-        System.out.println("#########################");
+        System.out.println("-------------------------");
 
 //        System.out.println("Id: " + this.id);
 //        System.out.println("Nombre: " + this.nombre);
 //        System.out.println("Precio: " + this.precio);
 //        System.out.println("Stock: " + this.stock);
     }
-
+        
     public boolean contieneNombre(String busqueda) {
         String nombreMinuscula = this.nombre.toLowerCase();
         // TODO: agregar una forma de reemplazar todas las vocales con acento por las vocales sin acento
@@ -43,6 +43,7 @@ public class Producto {
         // a checkear: nombreMinuscula.replaceAll("á", "a");
         return nombreMinuscula.contains(busqueda.toLowerCase());
     }
+    
 
 
     // GETTERS y SETTERS
@@ -72,5 +73,15 @@ public class Producto {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public void descontarStock(int cantidad) throws StockInsuficienteException {
+        if (cantidad <= 0) {
+            throw new StockInsuficienteException("La cantidad a descontar debe ser mayor a 0.");
+        }
+        if (cantidad > this.stock) {
+            throw new StockInsuficienteException("No hay suficiente stock disponible. Stock actual: " + this.stock);
+        }
+        this.stock -= cantidad;
     }
 }
