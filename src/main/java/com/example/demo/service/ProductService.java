@@ -1,39 +1,46 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Producto;
-import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
-    private List<Producto> productoList;
-    private ProductRepository repository;
     private ProductoRepository repositoryJPA;
 
-    public ProductService() {}
+    //public ProductService() {}
 
-    public ProductService(ProductRepository repository) {
-        this.repository = repository;
+    public ProductService(ProductoRepository repositoryJPA){
+        this.repositoryJPA = repositoryJPA;
     }
-    public List<Producto> listarProductos(){
+
+    public List<Producto> listar(){
          return this.repositoryJPA.findAll();
      }
-    /*
-    public List<Producto> listarProducto(){
-        return this.repository.obtenerTodosLosProductos();
-    }
-    */
-    public ProductService(ProductRepository repository,ProductoRepository repositoryJPA){
-        this.repository = repository;
-        this.repositoryJPA = repositoryJPA;
-        this.productoList = new ArrayList<>();
-    }
-    public Producto crearProducto(Producto producto){
+
+    public Producto crear(Producto producto){
         Producto productoGuardado = this.repositoryJPA.save(producto);
         return productoGuardado;
+    }
+
+    public Producto buscarPorId(Integer id){
+        Optional<Producto> encontrado = this.repositoryJPA.findById(id);
+        return encontrado.orElse(null);
+    }
+
+    public void editarProducto(Integer id, Producto objProducto){
+
+        Producto encontrado = this.buscarPorId(id);
+        encontrado.setPrecio(objProducto.getPrecio());
+        this.repositoryJPA.save(encontrado);
+    }
+    public Producto eliminarProducto(Integer id){
+        Producto encontrado = this.buscarPorId(id);
+        this.repositoryJPA.delete(encontrado);
+        return encontrado;
     }
 }

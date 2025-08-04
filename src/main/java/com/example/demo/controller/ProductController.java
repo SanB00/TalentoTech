@@ -23,11 +23,13 @@ public class ProductController {
     }
 
     @GetMapping("/listar")
-    ResponseEntity<List<Producto>> listar(){
-       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.service.listarProductos());
+    List<Producto> listar(){
+       return this.service.listar();
     }
+
     @PostMapping("/crear")
-    public ResponseEntity<Producto> crearProducto(@RequestBody Producto producto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.crearProducto(producto));
+    public ResponseEntity<Producto> crear(@RequestBody Producto producto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.service.crear(producto));
     }
+
 }

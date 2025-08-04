@@ -14,28 +14,30 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @NoArgsConstructor
 @Entity
 public class Producto {
-     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
     private double precio;
     private int stock;
     private int cantAComprar;
-/*
-    public Producto() {
-    }
+    private String descripcion;
 
-    public Producto(String nombre,double precio, Integer id, int stock){
-        this.nombre = nombre;
-        this.stock = stock;
-        this.precio = precio;
-        this.cantAComprar = 0;
-    }
-*/
-    public void mostrarInfo(){
+    /*
+        public Producto() {
+        }
+
+        public Producto(String nombre,double precio, Integer id, int stock){
+            this.nombre = nombre;
+            this.stock = stock;
+            this.precio = precio;
+            this.cantAComprar = 0;
+        }
+    */
+    public void mostrarInfo() {
         System.out.println("======================");
-            System.out.println("""
+        System.out.println("""
                 Id:
                 Nombre:
                 Precio:
