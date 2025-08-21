@@ -32,13 +32,13 @@ public class ProductService {
         return encontrado.orElse(null);
     }
 
-    public void editarProducto(Integer id, Producto objProducto){
-
+    public Producto editar(Integer id, Producto objProducto){
         Producto encontrado = this.buscarPorId(id);
         encontrado.setPrecio(objProducto.getPrecio());
         this.repositoryJPA.save(encontrado);
+        return encontrado;
     }
-    public Producto eliminarProducto(Integer id){
+    public Producto eliminar(Integer id){
         Producto encontrado = this.buscarPorId(id);
         this.repositoryJPA.delete(encontrado);
         return encontrado;
